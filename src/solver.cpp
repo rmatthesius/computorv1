@@ -2,7 +2,7 @@
 #include <cmath>
 #include "../include/computor.hpp"
 
-int get_degree(const Equation &eq)
+int ft_getDegree(const Equation &eq)
 {
 	int deg = 0;
 	for (Term t : eq.terms)
@@ -10,9 +10,9 @@ int get_degree(const Equation &eq)
 	return deg;
 }
 
-void solve_equation(const Equation &eq)
+void ft_solveEquation(const Equation &eq)
 {
-	int deg = get_degree(eq);
+	int deg = ft_getDegree(eq);
 	std::cout << "Polynomial degree: " << deg << std::endl;
 
 	if (deg > 2) {

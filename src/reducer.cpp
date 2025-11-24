@@ -3,7 +3,7 @@
 #include <cmath>
 #include "../include/computor.hpp"
 
-void reduce_equation(Equation &eq)
+void ft_reduceEquation(Equation &eq)
 {
 	std::map<int,double> acc;
 	for (Term t : eq.terms)
@@ -16,7 +16,7 @@ void reduce_equation(Equation &eq)
 	}
 }
 
-void print_reduced_form(const Equation &eq)
+void ft_printReducedForm(const Equation &eq)
 {
 	std::cout << "Reduced form: ";
 	if (eq.terms.empty()) { std::cout << "0 = 0\n"; return; }

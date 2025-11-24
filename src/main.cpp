@@ -6,15 +6,15 @@ int main(int argc, char **argv)
 	std::string input;
 	Equation eq;
 
-	if (!read_input(argc, argv, input))
+	if (!ft_readInput(argc, argv, input))
 		return 1;
 
-	if (!parse_equation(input, eq))
+	if (!ft_parseEquation(input, eq))
 		return 1;
 
-	reduce_equation(eq);
-	print_reduced_form(eq);
-	solve_equation(eq);
+	ft_reduceEquation(eq);
+	ft_printReducedForm(eq);
+	ft_solveEquation(eq);
 
 	return 0;
 }

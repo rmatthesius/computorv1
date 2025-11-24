@@ -14,15 +14,15 @@ struct Equation {
 };
 
 // Parser & Utils
-bool read_input(int argc, char **argv, std::string &input);
-void remove_spaces(std::string &s);
-bool parse_equation(const std::string &input, Equation &eq);
+bool ft_readInput(int argc, char **argv, std::string &input);
+void ft_removeSpaces(std::string &s);
+bool ft_parseEquation(const std::string &input, Equation &eq);
 
 // Reducer
-void reduce_equation(Equation &eq);
-void print_reduced_form(const Equation &eq);
+void ft_reduceEquation(Equation &eq);
+void ft_printReducedForm(const Equation &eq);
 
 // Solver
-void solve_equation(const Equation &eq);
+void ft_solveEquation(const Equation &eq);
 
 #endif

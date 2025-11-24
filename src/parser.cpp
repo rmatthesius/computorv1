@@ -4,7 +4,7 @@
 #include <cctype>
 #include "../include/computor.hpp"
 
-bool read_input(int argc, char **argv, std::string &input)
+bool ft_readInput(int argc, char **argv, std::string &input)
 {
 	if (argc >= 2) {
 		for (int i = 1; i < argc; ++i) {
@@ -19,7 +19,7 @@ bool read_input(int argc, char **argv, std::string &input)
 	return !input.empty();
 }
 
-void remove_spaces(std::string &s)
+void ft_removeSpaces(std::string &s)
 {
 	std::string out;
 	for (char c : s)
@@ -27,36 +27,46 @@ void remove_spaces(std::string &s)
 	s = out;
 }
 
-// Hilfsfunktion: Term "a*X^p" extrahieren
-static Term parse_term(const std::string &s)
+static Term ft_parseTerm(const std::string &s)
 {
 	Term t;
+
 	size_t pos = s.find("*X^");
+
+	if (pos == std::string::npos) {
+		t.coefficient = std::atof(s.c_str());
+		t.exponent = 0;
+		return t;
+	}
+
 	std::string coef = s.substr(0, pos);
-	std::string exp = s.substr(pos+3);
+	std::string exp  = s.substr(pos + 3);
+
 	t.coefficient = std::atof(coef.c_str());
 	t.exponent = std::atoi(exp.c_str());
 	return t;
 }
 
-bool parse_equation(const std::string &input, Equation &eq)
+
+bool ft_parseEquation(const std::string &input, Equation &eq)
 {
 	std::string s = input;
-	remove_spaces(s);
+	ft_removeSpaces(s);
 	size_t eqpos = s.find('=');
 	std::string lhs = s.substr(0, eqpos);
 	std::string rhs = s.substr(eqpos+1);
 
 	std::vector<Term> terms;
 
-	auto add_terms = [&](const std::string &side, int sign){
+	auto ft_addTerms = [&](const std::string &side, int sign){
+		// std::cout << "inside ft_addTerms\n";
 		std::stringstream ss(side);
 		std::string item;
 		size_t start = 0;
 		for (size_t i=0;i<=side.size();++i){
 			if (i==side.size() || side[i]=='+' || side[i]=='-'){
 				if (i>start){
-					Term t = parse_term(side.substr(start, i-start));
+					Term t = ft_parseTerm(side.substr(start, i-start));
 					t.coefficient *= sign;
 					terms.push_back(t);
 				}
@@ -65,9 +75,12 @@ bool parse_equation(const std::string &input, Equation &eq)
 		}
 	};
 
-	add_terms(lhs, 1);
-	add_terms(rhs, -1);
+	// std::cout << "after ft_addTerms\n";
 
+	ft_addTerms(lhs, 1);
+	ft_addTerms(rhs, -1);
+
+	// std::cout << "after adding the terms\n";
 	eq.terms = terms;
 	return true;
 }
