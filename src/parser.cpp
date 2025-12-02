@@ -6,12 +6,18 @@
 
 bool ft_readInput(int argc, char **argv, std::string &input)
 {
-	if (argc >= 2) {
-		for (int i = 1; i < argc; ++i) {
-			input += argv[i];
-			if (i < argc - 1) input += " ";
-		}
+	// check if argc has the right amount
+	if (argc > 2) {
+		std::cout << "wrong number of argments. Please enter like this example: ./computor \"5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0\"" << std::endl;
+		exit(1);
 	}
+
+	// putting the EQ into input
+	if (argc == 2) {
+		input = argv[1];
+	}
+
+	// checks if imput is empty if so I offer you a chance to get it right this time
 	if (input.empty()) {
 		std::cout << "Please enter an equation: ";
 		std::getline(std::cin, input);
@@ -51,23 +57,39 @@ static Term ft_parseTerm(const std::string &s)
 bool ft_parseEquation(const std::string &input, Equation &eq)
 {
 	std::string s = input;
+	// cutting out the spaces for easier parsing#
+	// std::cout << "Input before removing spaces: " << s << "\n";
 	ft_removeSpaces(s);
+	// std::cout << "Input after removing spaces: " << s << "\n";
+
+	// searching for the equal sign and splitting the equation into LHS and RHS
 	size_t eqpos = s.find('=');
 	std::string lhs = s.substr(0, eqpos);
 	std::string rhs = s.substr(eqpos+1);
 
+	// std::cout << "LHS: " << lhs << "\n";
+	// std::cout << "RHS: " << rhs << "\n";
+
 	std::vector<Term> terms;
 
+	// lambda function to parse terms from the right side to the left side
+	// lambda is a function that captures variables from the surrounding scope with the [&] syntax
+	// this function only exists within the scope of ft_parseEquation and is anonymous to other functions
 	auto ft_addTerms = [&](const std::string &side, int sign){
-		// std::cout << "inside ft_addTerms\n";
 		std::stringstream ss(side);
 		std::string item;
 		size_t start = 0;
+
+		// looping through the side to find either + or - signs to split the terms
 		for (size_t i=0;i<=side.size();++i){
 			if (i==side.size() || side[i]=='+' || side[i]=='-'){
+				
+				// start is marking the begining of the term
 				if (i>start){
 					Term t = ft_parseTerm(side.substr(start, i-start));
+					// adjusting the sign of the term based on which side of the equation it is RHS terms get negative sign
 					t.coefficient *= sign;
+					// std::cout << "Parsed term: coef=" << t.coefficient << ", exp=" << t.exponent << "\n";
 					terms.push_back(t);
 				}
 				start = i;
@@ -75,12 +97,10 @@ bool ft_parseEquation(const std::string &input, Equation &eq)
 		}
 	};
 
-	// std::cout << "after ft_addTerms\n";
-
+	// lhs terms are keeping their sign, rhs terms are negated
 	ft_addTerms(lhs, 1);
 	ft_addTerms(rhs, -1);
 
-	// std::cout << "after adding the terms\n";
 	eq.terms = terms;
 	return true;
 }
