@@ -2,6 +2,7 @@
 #include <cmath>
 #include "../include/computor.hpp"
 
+// searching through the terms to find the highest exponent and returns it
 int ft_getDegree(const Equation &eq)
 {
 	int deg = 0;
@@ -20,6 +21,8 @@ void ft_solveEquation(const Equation &eq)
 		return;
 	}
 
+	// a, b, c for ax^2 + bx + c = 0
+	// the equation is already reduced, so missing terms have coefficient 0
 	double a=0,b=0,c=0;
 	for (Term t : eq.terms){
 		if (t.exponent==2) a=t.coefficient;
@@ -27,17 +30,29 @@ void ft_solveEquation(const Equation &eq)
 		else if (t.exponent==0) c=t.coefficient;
 	}
 
+	// Linear equation
+	// c = 0  =>  any real number is a solution
+	// fabs and 1e-12 to avoid floating point precision issues
 	if (deg==0){
 		if (fabs(c)<1e-12) std::cout<<"Any real number is a solution.\n";
 		else std::cout<<"No solution.\n";
 		return;
 	}
-	if (deg==1){
-		std::cout<<"The solution is:\n" << -c/b << std::endl;
-		return;
-	}
+
+	// bx + c = 0  =>  x = -c/b
+if (deg == 1) {
+	// check for b == 0 to avoid division by zero
+    if (fabs(b) < 1e-12) {
+        std::cout << "Numerical instability: coefficient b is zero.\n";
+    } else {
+        std::cout << "The solution is:\n" << -c / b << std::endl;
+    }
+    return;
+}
 
 	// Quadratische Gleichung
+	// ax^2 + bx + c = 0
+	// calculate discriminant to know how to solve
 	double disc = b*b - 4*a*c;
 	if (disc>0){
 		std::cout<<"Discriminant is strictly positive, the two solutions are:\n";
