@@ -83,7 +83,7 @@ bool ft_parseEquation(const std::string &input, Equation &eq)
 		// looping through the side to find either + or - signs to split the terms
 		for (size_t i=0;i<=side.size();++i){
 			if (i==side.size() || side[i]=='+' || side[i]=='-'){
-				
+
 				// start is marking the begining of the term
 				if (i>start){
 					Term t = ft_parseTerm(side.substr(start, i-start));

@@ -1,0 +1,90 @@
+// following are from the subject file
+
+$>./computor "5 * X^0 + 4 * X^1 - 9.3 * X^2 = 1 * X^0"
+Reduced form: 4 * X^0 + 4 * X^1 - 9.3 * X^2 = 0
+Polynomial degree: 2
+Discriminant is strictly positive, the two solutions are:
+0.905239
+-0.475131
+
+$>./computor "5 * X^0 + 4 * X^1 = 4 * X^0"
+Reduced form: 1 * X^0 + 4 * X^1 = 0
+Polynomial degree: 1
+The solution is:
+-0.25
+
+$>./computor "8 * X^0 - 6 * X^1 + 0 * X^2 - 5.6 * X^3 = 3 * X^0"
+Reduced form: 5 * X^0 - 6 * X^1 + 0 * X^2 - 5.6 * X^3 = 0
+Polynomial degree: 3
+The polynomial degree is strictly greater than 2, I can't solve.
+
+$>./computor "6 * X^0 = 6 * X^0"
+Reduced form: 0 * X^0 = 0
+Any real number is a solution.
+
+$>./computor "10 * X^0 = 15 * X^0"
+Reduced form: -5 * X^0 = 0
+No solution.
+
+$>./computor "1 * X^0 + 2 * X^1 + 5 * X^2 = 0"
+Reduced form: 1 * X^0 + 2 * X^1 + 5 * X^2 = 0
+Polynomial degree: 2
+Discriminant is strictly negative, the two complex solutions are:
+-1/5 + 2i/5
+-1/5 - 2i/5
+
+// following are own tests
+
+# 1. Alles hebt sich auf → jede reelle Zahl ist Lösung
+"42 * X^0 = 42 * X^0"
+"5 * X^0 + 7 * X^1 - 5 * X^0 - 7 * X^1 = 0"
+"0 * X^0 = 0"
+"0 * X^42 = 0 * X^17"
+"3.14 * X^0 - 3.14 * X^0 = 0 * X^5"
+
+# 2. Widerspruch → keine Lösung
+"42 * X^0 = 43 * X^0"
+"5 = 6"
+"0 * X^0 = 7 * X^0"
+"10 * X^0 = 15 * X^0"
+"0 = 1"
+"-5 * X^0 = 0"
+
+# 3. Grad 0 nach Reduktion (Konstante ≠ 0)
+"5 * X^2 - 5 * X^2 + 7 = 0"
+"3 * X^4 + 8 * X^1 - 3 * X^4 - 8 * X^1 + 12 = 0"
+"0 * X^3 + 0.0 * X^2 + 0 * X^1 - 4 * X^0 = 0"
+
+# 4. Negative und gebrochene Koeffizienten
+"-4.2 * X^0 + 2.5 * X^1 = 1.8 * X^0"
+"-1 * X^2 + 0.5 * X - 0.25 = 0"
+"3.14159 * X^0 = -2.71828 * X^0" -> no solution is right
+"-0.0001 * X^2 - 0.0002 * X + 0.0003 = 0" -> check for rounding errors
+
+# 5. Terme mit 0-Koeffizient (sollten ignoriert werden)
+"0 * X^2 + 4 * X^1 - 9 * X^0 = 0"
+"5 * X^0 + 0 * X^3 + 0 * X^5 - 2 * X^1 = 1 * X^0" -> X^5 is to high, but because it is 0 * X^5 it gets ignored cus of the 0 *
+"0 * X^10 + 0 * X^0 = 0"
+
+# 6. Grad > 2
+"1 * X^3 + 2 * X^2 - 5 * X^1 + 3 * X^0 = 0"
+"-2.5 * X^4 + 7 * X^3 = 4 * X^0"
+
+# 7. Doppelte / mehrfache Wurzel (wichtig für Diskriminante = 0)
+"1 * X^2 - 2 * X^1 + 1 * X^0 = 0"	# (x-1)^2 = 0
+"4 * X^2 + 4 * X + 1 = 0"			# (2x+1)^2 = 0	wrong input cus ther is nothing after the X it should be X^1
+"0 * X^2 + 0 * X + 0 = 0"			# Sonderfall	wrong input cus ther is nothing after the X it should be X^1
+
+# 8. Sehr kleine Koeffizienten → Diskriminante nahe 0
+"0.000001 * X^2 + 0.000002 * X - 0.000003 = 0"
+"1e-10 * X^2 + 2e-10 * X + 1e-10 = 0"
+
+# 9. Nur eine Seite konstant (andere Seite fehlt implizit = 0)
+"5 * X^2 + 3 * X - 2"
+"42 * X^0"
+
+# 10. Komische aber noch valide Eingaben
+" +5 * X^0 = -3 * X^0"
+"-7.5 * X^1 = 0"
+"0.0 * X^0 = -0.0 * X^0"
+"2 * X^0 + -3 * X^1 + 4.2 * X^2 = 1.0 * X^0"
