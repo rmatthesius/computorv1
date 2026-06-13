@@ -59,7 +59,10 @@ computorv1/
     ├── reducer.cpp
     └── solver.cpp
 ```
-Requirements
+## Requirements
 
 - C++11 compatible compiler
 - make
+
+## Notes
+- This was a group project
