@@ -61,5 +61,5 @@ computorv1/
 ```
 Requirements
 
-C++11 compatible compiler
-make
+- C++11 compatible compiler
+- make
