@@ -63,6 +63,3 @@ computorv1/
 
 - C++11 compatible compiler
 - make
-
-## Notes
-- This was a group project
