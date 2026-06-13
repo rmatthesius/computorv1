@@ -26,7 +26,7 @@ Quadratic equation:
 ```
 Output:
 ```
-textReduced form: 4 * X^0 + 4 * X^1 - 9.3 * X^2 = 0
+Reduced form: 4 * X^0 + 4 * X^1 - 9.3 * X^2 = 0
 Polynomial degree: 2
 Discriminant is strictly positive, the two solutions are:
 0.905239
@@ -36,7 +36,7 @@ Linear equation:
 ```
 ./computor "5 * X^0 + 4 * X^1 = 4 * X^0"
 Output:
-textReduced form: 1 * X^0 + 4 * X^1 = 0
+Reduced form: 1 * X^0 + 4 * X^1 = 0
 Polynomial degree: 1
 The solution is:
 -0.25
@@ -44,11 +44,11 @@ The solution is:
 See testEQs.txt for more test cases.
 ```
 Building
-Bashmake          # Compile
+make          # Compile
 make re       # Rebuild
 make fclean   # Clean everything
 Project Structure
-textcomputorv1/
+computorv1/
 ├── Makefile
 ├── testEQs.txt
 ├── include/
